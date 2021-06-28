@@ -5,7 +5,7 @@ def connection():
     try:
         conn=sqlite3.connect("Students.db")
     except:
-        print("cannot connect to the database")
+        print("Error")
     return conn    
 
 
@@ -42,7 +42,7 @@ def add_student():
                 cur.execute("insert into students values(?,?,?,?,?)",(student_name.get(),id_number.get(),year_level.get(),(gender.get()),courseID.get()))
                 conn.commit()
                 conn.close()
-                t1.insert(END,"ADDED SUCCESSFULLY\n")
+                t1.insert(END,"DONE\n")
 
 
 def list_student():
@@ -63,29 +63,24 @@ def delete_student():
         cur.execute("DELETE FROM students WHERE ID_NUMBER=?",(id_number.get(),))
         conn.commit()
         conn.close()
-        t1.insert(END,"SUCCESSFULLY DELETED THE USER\n")
+        t1.insert(END,"THE STUDENT HAS BEEN DELETED\n")
 
 def update_student():
     ret=verifier()
     if ret==0:
         conn=connection()
         cur=conn.cursor()
-        cur.execute("UPDATE students SET NAME=?,ID_NUMBER=?,YEAR_LEVEL=?,GENDER=?,COURSE=?,ADDRESS=? where ID_NUMBER=?",(student_name.get(),id_number.get(),year_level.get(),(gender.get()),(courseID.get()),int(id_number.get())))
+        cur.execute("UPDATE students SET NAME=?,ID_NUMBER=?,YEAR_LEVEL=?,GENDER=?,COURSEID=? where ID_NUMBER=?",(student_name.get(),id_number.get(),year_level.get(),(gender.get()),(courseID.get()),id_number.get()))
         conn.commit()
         conn.close()
-        t1.insert(END,"UPDATED SUCCESSFULLY\n")
-
-def search_data():
-    con=sqlite3.connect("StudentData.db")
-    cur = con.cursor()
-    cur.execute("SELECT * FROM students WHERE NAME=?, ID_NUMBER=?, YEAR_LEVEL=?, GENDER=?, COURSER=?",(student_name,id_number,year_level,gender,courseID))
-    rows=cur.fetchall()
-    con.close()
-    return rows
-
+        t1.insert(END,"THE STUDENT HAS BEEN UPDATED\n")
 
 def close():
-    sys.exit() 
+    sys.exit()
+
+
+
+ 
 
 
 if __name__=="__main__":
@@ -95,7 +90,7 @@ if __name__=="__main__":
     root.config(bg="Red1")
 
     title = Label(root, text="Simple Student Information System", bd=0, relief=GROOVE,
-                      font=("Calibri", 50, "bold italic"), fg="Black")
+                      font=("Calibri", 50, "bold italic"), fg="Black",bg="Red1")
     title.pack(side=TOP)
     
      
@@ -105,54 +100,43 @@ if __name__=="__main__":
     gender=StringVar()
     courseID=StringVar()
     
-    
+    #======label&entries============
     label1=Label(root,text="Name:",fg="black",bg="Red1",font=("Calibri", 20, "bold italic"))
-    label1.place(x=0,y=100)
-
-    label2=Label(root,text="ID number:",fg="black",bg="Red1",font=("Calibri", 20, "bold italic"))
-    label2.place(x=0,y=160)
-
-    label3=Label(root,text="Year Level:",fg="black",bg="Red1",font=("Calibri", 20, "bold italic"))
-    label3.place(x=0,y=220)
-
-    label4=Label(root,text="Gender:",fg="black",bg="Red1",font=("Calibri", 20, "bold italic"))
-    label4.place(x=0,y=280)
-
-    label5=Label(root,text="CourseID:",fg="black",bg="Red1",font=("Calibri", 20, "bold italic"))
-    label5.place(x=0,y=340)
-
-    
-
-    
-
-    
+    label1.place(x=10,y=100)
 
     e1=Entry(root,textvariable=student_name,font=("Calibri", 16, ), bd=1, relief=GROOVE)
-    e1.place(x=140,y=105)
+    e1.place(x=150,y=105)
+
+    label2=Label(root,text="ID number:",fg="black",bg="Red1",font=("Calibri", 20, "bold italic"))
+    label2.place(x=10,y=160)
 
     e2=Entry(root,textvariable=id_number,font=("Calibri", 16, ), bd=1, relief=GROOVE)
-    e2.place(x=140,y=165)
+    e2.place(x=150,y=165)
+
+    label3=Label(root,text="Year Level:",fg="black",bg="Red1",font=("Calibri", 20, "bold italic"))
+    label3.place(x=10,y=220)
 
     e3=Entry(root,textvariable=year_level,font=("Calibri", 16, ), bd=1, relief=GROOVE)
-    e3.place(x=140,y=225)
+    e3.place(x=150,y=225)
+
+    label4=Label(root,text="Gender:",fg="black",bg="Red1",font=("Calibri", 20, "bold italic"))
+    label4.place(x=10,y=280)
 
     e4=Entry(root,textvariable=gender,font=("Calibri", 16, ), bd=1, relief=GROOVE)
-    e4.place(x=140,y=285)
-    
+    e4.place(x=150,y=285)
+
+    label5=Label(root,text="CourseID:",fg="black",bg="Red1",font=("Calibri", 20, "bold italic"))
+    label5.place(x=10,y=340)
+
     e5=Entry(root,textvariable=courseID,font=("Calibri", 16, ), bd=1, relief=GROOVE)
-    e5.place(x=140,y=345)
+    e5.place(x=150,y=345)
 
     
-    
-
-   
-
-
-    
-    t1=Text(root,width=80,height=20)
+    #========Table========
+    t1=Text(root,width=80,height=20,bd=4)
     t1.place(x=500, y=90, width=795, height=555)
 
-
+    #======Buttons======
     b1=Button(root,text="ADD STUDENT",bg="Black", fg="white", width=27,height=2,command=add_student)
     b1.place(x=20,y=500)
 
@@ -165,8 +149,9 @@ if __name__=="__main__":
     b4=Button(root,text="UPDATE INFO",bg="Black", fg="white", width=27,height=2,command=update_student)
     b4.place(x=225,y=545)
 
-    b5=Button(root,text="CLOSE",bg="Black", fg="white", width=27,height=2,command=close)
-    b5.place(x=125,y=590)
+   
+
+   
 
     
 
