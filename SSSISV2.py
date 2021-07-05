@@ -39,21 +39,16 @@ class Home(tk.Frame):
 
         
         
-        course = tk.Button(self, text="COURSES",font=("Calibri",18,"bold"),height = 1, width = 12,relief=RIDGE, bg="Black", fg="white", command=lambda: controller.show(Courses))
-        course.place(x=200,y=300)
+        course = tk.Button(self, text="COURSES",font=("Calibri",18,"bold"),height = 1, width = 20,relief=RIDGE, bg="Black", fg="white", command=lambda: controller.show(Courses))
+        course.place(x=300,y=300)
         
         
-        students = tk.Button(self, text="STUDENTS",font=("Calibri",18, "bold"), height = 1, width = 12,relief=RIDGE, bg="Black", fg="white", command=lambda: controller.show(Students))
-        students.place(x=450,y=300)
+        students = tk.Button(self, text="STUDENTS",font=("Calibri",18, "bold"), height = 1, width = 20,relief=RIDGE, bg="Black", fg="white", command=lambda: controller.show(Students))
+        students.place(x=700,y=300)
         
 
-        self.students=Button(self, font=("Calibri",10), padx=5, width=20,height=3, bd=2, text=" ""STUDENT INFORMATION",anchor=W, bg="Black",fg="white", command=lambda: controller.show(Students))
-        self.students.place(x=700,y=300)
         
         
-        self.course=Button(self, font=("Calibri",10), padx =5, width=20, height=3, bd=2,  text="   ""LISTS OF COURSES",anchor=W, bg="Black",fg="white", command=lambda: controller.show(Courses))
-
-        self.course.place(x=950,y=300)
 
 
 
@@ -168,7 +163,7 @@ class Courses(tk.Frame):
             Course_Code.set(values[0])
             Course_Name.set(values[1])
 
-        home = tk.Button(self, text="HOME",font=("Calibri",18,"bold"), height = 1, width = 12,relief=RIDGE, bg="Black", fg="white", command=lambda: controller.show(Home))
+        home = tk.Button(self, text="HOME",font=("Calibri",18,"bold"), height = 1, width = 12,relief=RIDGE, bg="Black", fg="black", command=lambda: controller.show(Home))
         home.place(x=20,y=30)
         
         
